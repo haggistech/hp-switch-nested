@@ -1,19 +1,16 @@
-mode=$(head -n1 ~/.attract/attract.cfg)
-echo $mode
+#!/bin/bash
 
-if [ "$mode" = "# Simple" ]; then
-echo "Simple Mode detected, Switching to Nested"
-sleep 2
-rm -rf ~/.attract/attract.cfg
-cp ~/.attract/attract.nested ~/.attract/attract.cfg
+# This script will switch between a Simple and Nested layout
+
+# Author: Mik McLean
+# Made for Hyperpie
+# https://www.hyperpie.org
+
+file=/home/pi/.attract/attract.cfg
+
+sed -i '11,$ { /in_menu/s/\byes\b/test_no/g }' $file
+sed -i '11,$ { /in_menu/s/\bno\b/yes/g }' $file
+sed -i '11,$ { /in_menu/s/\btest_no\b/no/g }' $file
+
+
 reboot
-fi 
-
-if [ "$mode" = "# Nested" ]; then
-echo "Nested Mode detected, Switching to Simple"
-sleep 2
-rm -rf ~/.attract/attract.cfg
-cp ~/.attract/attract.simple ~/.attract/attract.cfg
-reboot
-fi
-
